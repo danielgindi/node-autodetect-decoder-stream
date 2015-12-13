@@ -1,0 +1,31 @@
+{
+  "name": "autodetect-decoder-stream",
+  "version": "1.0.0",
+  "description": "An iconv-lite stream that autodetects the encoding and fallbacks to a specified fallback encoding.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielgindi/node-autodetect-decoder-stream"
+  },
+  "keywords": [
+    "node.js",
+    "stream",
+    "decoding",
+    "encoding",
+    "iconv",
+    "iconv-lite"
+  ],
+  "author": "Daniel Cohen Gindi <danielgindi@gmail.com> (https://github.com/danielgindi)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danielgindi/node-autodetect-decoder-stream/issues"
+  },
+  "homepage": "https://github.com/danielgindi/node-autodetect-decoder-stream",
+  "dependencies": {
+    "jschardet": "1.*",
+    "iconv-lite": "0.*"
+  }
+}
