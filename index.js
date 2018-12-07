@@ -64,7 +64,7 @@ AutoDetectDecoderStream.prototype._consumeBufferForDetection = function (chunk, 
             // Try to detect encoding
             this._detectedEncoding = jschardet.detect(this._detectionBuffer).encoding;
 
-            if (this._detectedEncoding === 'ascii') {
+            if (!this._detectedEncoding || this._detectedEncoding === 'ascii') {
                 //noinspection ExceptionCaughtLocallyJS
                 throw new Error('Not enough data, recognized as ASCII. We probably need to use the fallback.');
             }
