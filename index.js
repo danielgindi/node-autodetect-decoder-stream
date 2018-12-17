@@ -38,16 +38,16 @@ util.inherits(AutoDetectDecoderStream, Transform);
  * @param {function} done
  */
 AutoDetectDecoderStream.prototype._consumeBufferForDetection = function (chunk, done) {
+    if (!this._detectionBuffer) {
+
+        // Initialize buffer on first invocation
+        this._detectionBuffer = Buffer.alloc(0);
+    }
 
     if (chunk) {
 
         // Concatenate buffers until we get the minimum size we want
-        if (this._detectionBuffer) {
-            this._detectionBuffer = Buffer.concat([this._detectionBuffer, chunk]);
-        } else {
-            this._detectionBuffer = chunk;
-        }
-
+        this._detectionBuffer = Buffer.concat([this._detectionBuffer, chunk]);
     }
 
     // Do we have enough buffer?
