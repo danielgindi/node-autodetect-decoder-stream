@@ -8,19 +8,17 @@ An `iconv-lite` stream that autodetects the encoding and fallbacks to a specifie
 Usage example:
 
 ```javascript
-var AutoDetectDecoderStream = require('autodetect-decoder-stream');
+const AutoDetectDecoderStream = require('autodetect-decoder-stream');
 
-var stream = fs.createReadStream('1.csv').pipe(new AutoDetectDecoderStream({ defaultEncoding: '1255' }));
+let stream = fs.createReadStream('1.csv').pipe(new AutoDetectDecoderStream({ defaultEncoding: '1255' }));
 
-stream.on('data', function (data) {
-  
-  console.log(data);
-  
-}).on('end', function () {
-
-  console.log('Done reading.');
-  
-})
+stream
+    .on('data', data => {
+      console.log(data);
+    })
+    .on('end', () => {
+      console.log('Done reading.');
+    });
 
 ```
 
