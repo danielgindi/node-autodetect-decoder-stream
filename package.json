@@ -20,6 +20,9 @@
   ],
   "author": "Daniel Cohen Gindi <danielgindi@gmail.com> (https://github.com/danielgindi)",
   "license": "MIT",
+  "engines": {
+    "node": ">= 6"
+  },
   "bugs": {
     "url": "https://github.com/danielgindi/node-autodetect-decoder-stream/issues"
   },
