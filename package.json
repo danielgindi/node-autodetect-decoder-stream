@@ -1,6 +1,6 @@
 {
   "name": "autodetect-decoder-stream",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "An iconv-lite stream that autodetects the encoding and fallbacks to a specified fallback encoding.",
   "main": "index.js",
   "scripts": {
