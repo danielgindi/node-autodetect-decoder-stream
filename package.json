@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/danielgindi/node-autodetect-decoder-stream",
   "dependencies": {
-    "jschardet": "1.*",
+    "jschardet": "2.*",
     "iconv-lite": "0.*"
   },
   "devDependencies": {

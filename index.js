@@ -8,10 +8,10 @@ const Transform = Stream.Transform;
 class AutoDetectDecoderStream extends Transform {
     /**
      * @param {Object?} options
-     * @param {String=utf8} options.defaultEncoding - What encoding to fall-back to? (Specify any `iconv-lite` encoding)
-     * @param {Number?} options.minConfidence - Minimum confidence to require for detecting encodings. @see {@link https://github.com/aadsm/jschardet|chardet module}
-     * @param {Number=128} options.consumeSize - How many bytes to use for detecting the encoding? (Default 128)
-     * @param {Boolean=true} options.stripBOM - Should strip BOM for UTF streams?
+     * @param {string=utf8} options.defaultEncoding - What encoding to fall-back to? (Specify any `iconv-lite` encoding)
+     * @param {number?} options.minConfidence - Minimum confidence to require for detecting encodings. @see {@link https://github.com/aadsm/jschardet|chardet module}
+     * @param {number=128} options.consumeSize - How many bytes to use for detecting the encoding? (Default 128)
+     * @param {boolean=true} options.stripBOM - Should strip BOM for UTF streams?
      * @constructor
      */
     constructor(options) {
@@ -50,16 +50,12 @@ class AutoDetectDecoderStream extends Transform {
         // Do we have enough buffer?
         if (this._detectionBuffer.length >= this._consumeSize || !chunk) {
 
-            // Backup and setup jschardet global threshold
-            const oldMinConfidence = Jschardet.Constants.MINIMUM_THRESHOLD;
-            if (this._minConfidence != null) {
-                Jschardet.Constants.MINIMUM_THRESHOLD = this._minConfidence;
-            }
-
             try {
 
                 // Try to detect encoding
-                this._detectedEncoding = Jschardet.detect(this._detectionBuffer).encoding;
+                this._detectedEncoding = Jschardet.detect(this._detectionBuffer, {
+					minimumThreshold: this._minConfidence
+				}).encoding;
 
                 if (!this._detectedEncoding || this._detectedEncoding === 'ascii') {
                     //noinspection ExceptionCaughtLocallyJS
@@ -72,9 +68,6 @@ class AutoDetectDecoderStream extends Transform {
                 this._detectedEncoding = this._defaultEncoding;
 
             }
-
-            // Restore jschardet global threshold
-            Jschardet.Constants.MINIMUM_THRESHOLD = oldMinConfidence;
 
             this.conv = Iconv.getDecoder(this._detectedEncoding, this._iconvOptions);
 
