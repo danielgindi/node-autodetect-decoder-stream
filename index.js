@@ -111,7 +111,7 @@ class AutoDetectDecoderStream extends Transform {
         try {
 
             if (!this._detectedEncoding) {
-                this._consumeBufferForDetection(null, done);
+                return this._consumeBufferForDetection(null, done);
             }
 
             const res = this.conv.end();
