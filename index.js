@@ -32,9 +32,8 @@ class AutoDetectDecoderStream extends Transform {
 
     /**
      * @param {Buffer?} chunk
-     * @param {function} done
      */
-    _consumeBufferForDetection(chunk, done) {
+    _consumeBufferForDetection(chunk) {
         if (!this._detectionBuffer) {
 
             // Initialize buffer on first invocation
@@ -74,13 +73,10 @@ class AutoDetectDecoderStream extends Transform {
             const res = this.conv.write(this._detectionBuffer);
             delete this._detectionBuffer;
 
-            if (res && res.length) {
+            if (res && res.length > 0) {
                 this.push(res, this.encoding);
             }
         }
-
-        done();
-
     }
 
     // noinspection JSUnusedGlobalSymbols
@@ -90,16 +86,14 @@ class AutoDetectDecoderStream extends Transform {
 
         try {
             if (this._detectedEncoding) {
-
                 const res = this.conv.write(chunk);
-                if (res && res.length) {
+                if (res && res.length > 0) {
                     this.push(res, this.encoding);
                 }
-                done();
-
             } else {
-                this._consumeBufferForDetection(chunk, done);
+                this._consumeBufferForDetection(chunk);
             }
+			done();
         }
         catch (e) {
             done(e);
@@ -111,11 +105,12 @@ class AutoDetectDecoderStream extends Transform {
         try {
 
             if (!this._detectedEncoding) {
-                return this._consumeBufferForDetection(null, done);
+                this._consumeBufferForDetection(null);
+				return done();
             }
 
             const res = this.conv.end();
-            if (res && res.length) {
+            if (res && res.length > 0) {
                 this.push(res, this.encoding);
             }
             done();
